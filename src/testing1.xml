@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Suite basico carga" verbose="1">
+    <!-- El siguiente parametro se pasa a todos los tests de la SUITE -->
+    <parameter name="tester-name" value="Tomas" />
+    <test name="Pruebo como llamar un test desde un archivo plano">
+        <classes>
+            <class name="java.demoPrecedencia">
+<!--            <class name="test.java.DemoPrecedencia">-->
+
+                <!-- si especifica el <methods> solo corre el test de ese/esos metodos,
+                si no corre el test de toda la clase-->
+                <methods>
+                    <include name="test1" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

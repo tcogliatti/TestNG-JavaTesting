@@ -1,0 +1,248 @@
+/************ PASO 1 ********************/
+
+TestNG  Desde Eclipse MarketPlace
+
+/*********** HASTA ACA *****************/
+
+/*********** PASO 2 ********************/
+
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterSuite;
+
+public class DemoPrecedencia {
+  @BeforeMethod
+  public void beforeMethod() {
+	  System.out.println("beforeMethod()");
+  }
+  @AfterMethod
+  public void afterMethod() {
+	  System.out.println("afterMethod()");
+  }
+  @DataProvider
+  public Object[][] Generador() {
+	  System.out.println("Genero casos");
+    return new Object[][] {
+      new Object[] { 1, "a" },
+      new Object[] { 2, "b" },
+    };
+  }
+  @Test(dataProvider = "Generador")
+  public void TestGenerado(Integer n, String s) {
+    System.out.println("El generador provee: "+s+" -"+" - "+n);
+  }
+  @BeforeClass
+  public void beforeClass() {
+	  System.out.println("beforeClass");
+  }
+  @AfterClass
+  public void afterClass() {
+	  System.out.println("afterClass()");
+  }
+  @BeforeTest
+  public void beforeTest() {
+	  System.out.println("beforeTest()");
+
+  }
+  @AfterTest
+  public void afterTest() {
+	  System.out.println("afterTest()");
+  }
+  @BeforeSuite
+  public void beforeSuite() {
+	  System.out.println("beforeSuite()");
+  }
+  @AfterSuite
+  public void afterSuite() {
+	  System.out.println("afterSuite()");
+  }
+  @Test
+  public void test1() {
+	  System.out.println("Ejecuto Test1");
+  }
+  @Test
+  public void test2() {
+	  System.out.println("Ejecuto Test2");
+  }
+  @Test
+  public void testSinEmplementar() {
+    throw new RuntimeException("Este test aun no esta implementado");
+  }
+}
+
+/*****************HASTA ACA ********************/
+
+
+
+/*********** PASO 3 DESDE ACA CREANDO UN GENERADOR - TestPersona.java *******************/
+
+package tudai.tdv.test.testng;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import tudai.tdv.java.Persona;
+
+public class TestPersona {
+	 @DataProvider
+	  public Persona[] GeneradorPersona() {
+		  System.out.println("Genero casos");
+	    return new Persona[] {
+			 new Persona("Juan","26.150.235","1979-01-01",42,true),
+			 new Persona("Pedro","27.280.234","1980-02-01",41,true),
+			 new Persona("Maria","28.184.259","1981-03-01",47,true),
+			 new Persona("Cecilia","32.234.528","1983-04-01",38,true),
+			 new Persona("Carlos","33.124.235","1985-04-01",36,true),
+			 new Persona("Jose","35.345.534","1987-04-01",34,true)
+
+	    };
+	  }
+		@Test(dataProvider = "GeneradorPersona")
+		public void testEdadBienCalculada(Persona p) {
+
+			int edadReportada = p.getEdad();
+			int edadReal= getEdad(p.getFechaNacimiento());
+			Assert.assertTrue(edadReportada == edadReal);
+			Assert.assertEquals(edadReportada, edadReal);
+			//Assert.assertTrue("Fallo en el calculo de la edad",edadReportada == edadReal);
+		}
+
+		public int getEdad(String fechaNacimiento) {
+		  try {
+	          // Crea un objeto SimpleDateFormat para parsear la fecha de nacimiento.
+	          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+	          // Parsea la fecha de nacimiento.
+	          Date fechaNac = sdf.parse(fechaNacimiento);
+
+	          // Obtiene la fecha actual.
+	          Date fechaActual = new Date();
+
+	          // Crea un objeto Calendar para calcular la diferencia entre las fechas.
+	          Calendar calNac = Calendar.getInstance();
+	          Calendar calActual = Calendar.getInstance();
+	          calNac.setTime(fechaNac);
+	          calActual.setTime(fechaActual);
+
+	          // Calcula la diferencia de años.
+	          int edad = calActual.get(Calendar.YEAR) - calNac.get(Calendar.YEAR);
+
+	          // Verifica si el cumpleaños ya pasó este año.
+	          if (calNac.get(Calendar.MONTH) > calActual.get(Calendar.MONTH) ||
+	              (calNac.get(Calendar.MONTH) == calActual.get(Calendar.MONTH) &&
+	               calNac.get(Calendar.DAY_OF_MONTH) > calActual.get(Calendar.DAY_OF_MONTH))) {
+	              edad--;
+	          }
+
+	          return edad;
+	      } catch (ParseException e) {
+	          e.printStackTrace();
+	          return -1; // Manejo de errores
+	      }
+		}
+}
+
+/*************  HASTA ACA ******************/
+
+
+/************** Modifico TestEdadBienCalculada************/
+
+  @Test(dataProvider = "GeneradorPersona",invocationCount = 3)
+
+
+/************* HASTA ACA ******************/
+
+
+
+/**********  Probando desde un XML testng.xml *******************/
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Suite basico carga" verbose="1">
+    <!-- El siguiente parametro se pasa a todos los tests de la SUITE -->
+    <parameter name="tester-name" value="Quique" />
+    <test name="Pruebo como llamar un test desde un archivo plano">
+        <classes>
+            <class name="tudai.tdv.test.testng.DemoPrecedencia">
+                <methods>
+                    <include name="test1" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+  </suite>
+
+/************ HASTA ACA *****************/
+
+/************* PASO 6 *******************/
+
+/************ USO DE PARAMETROS **********/
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite basico carga" verbose="1">
+    <!-- El siguiente parametro se pasa a todos los tests de la SUITE -->
+    <parameter name="tester-name" value="Quique" />
+    <test name="Crear programaciones">
+        <!-- parametro solo para los tests -->
+        <parameter name="prog-count" value="10" />
+        <classes>
+            <class name="tudai.tdyv.test.testng.ProgramaTest">
+                <methods>
+                    <include name="tudai.tdyv.test.testng.addMuchasProgramaciones" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+  </suite>
+
+
+/********************************************/
+
+/***** TEST con parametros: En test Persona agregamos ****/
+
+@Test
+		@Parameters({"nombre","dni","fnac"})
+		public void testConParametros(@Optional("Pepe") String nombre ,@Optional("20.345.678") String dni, @Optional("2001-2-3")String fNac)
+		{
+		Persona p = new Persona(nombre, dni, fNac, 0, false);
+		System.out.println(p);
+		}
+
+
+/******* EN el test.xml *******/
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Suite basico carga" verbose="1">
+    <!-- El siguiente parametro se pasa a todos los tests de la SUITE -->
+    <parameter name="tester-name" value="Quique" />
+    <test name="Pruebo como llamar un test desde un archivo plano">
+        <classes>
+            <class name="tudai.tdv.test.testng.TestPersona">
+                <methods>
+                <parameter name="nombre" value="Luis"/>
+				<parameter name="dni" value="12.345.6783"/>
+                    <parameter name="fnac" value ="1990-2-18" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+  </suite>
+
+
+/************* HASTA ACA ********************/
+
