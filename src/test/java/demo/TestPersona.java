@@ -1,3 +1,4 @@
+package demo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,15 +11,21 @@ import org.testng.annotations.Test;
 
 public class TestPersona {
     @DataProvider
-    public Persona[] GeneradorPersona() {
+    public Object[] GeneradorPersona() {
         System.out.println("Generacion de casos");
         return new Persona[]{
-                new Persona("Juan", "26.150.235", "1979-01-01", 42, true),
-                new Persona("Pedro", "27.280.234", "1980-02-01", 41, true),
-                new Persona("Maria", "28.184.259", "1981-03-01", 47, true),
-                new Persona("Cecilia", "32.234.528", "1983-04-01", 38, true),
-                new Persona("Carlos", "33.124.235", "1985-04-01", 36, true),
-                new Persona("Jose", "35.345.534", "1987-04-01", 34, true)
+                new Persona("Juan", "26.150.235", "1979-01-01", getEdad("1979-01-01"), true),
+                new Persona("Pedro", "27.280.234", "1980-02-01", getEdad("1980-02-01"), true),
+                new Persona("Maria", "28.184.259", "1981-03-01", getEdad("1981-03-01"), true),
+                new Persona("Cecilia", "32.234.528", "1983-04-01", getEdad("1983-04-01"), true),
+                new Persona("Carlos", "33.124.235", "1985-04-01", getEdad("1985-04-01"), true),
+                new Persona("Jose", "35.345.534", "1987-04-01", getEdad("1987-04-01"), true)
+//                new demo.Persona("Juan", "26.150.235", "1979-01-01", 42, true),
+//                new demo.Persona("Pedro", "27.280.234", "1980-02-01", 41, true),
+//                new demo.Persona("Maria", "28.184.259", "1981-03-01", 47, true),
+//                new demo.Persona("Cecilia", "32.234.528", "1983-04-01", 38, true),
+//                new demo.Persona("Carlos", "33.124.235", "1985-04-01", 36, true),
+//                new demo.Persona("Jose", "35.345.534", "1987-04-01", 34, true)
         };
     }
 

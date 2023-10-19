@@ -5,8 +5,8 @@
     <parameter name="tester-name" value="Tomas" />
     <test name="Pruebo como llamar un test desde un archivo plano">
         <classes>
-            <class name="java.demoPrecedencia">
-<!--            <class name="test.java.DemoPrecedencia">-->
+<!--            <class name="test.java.demoPrecedencia">-->
+            <class name="demo.DemoPrecedencia">
 
                 <!-- si especifica el <methods> solo corre el test de ese/esos metodos,
                 si no corre el test de toda la clase-->

@@ -17,7 +17,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.AfterSuite;
 
-public class DemoPrecedencia {
+public class demo.DemoPrecedencia {
   @BeforeMethod
   public void beforeMethod() {
 	  System.out.println("beforeMethod()");
@@ -81,7 +81,7 @@ public class DemoPrecedencia {
 
 
 
-/*********** PASO 3 DESDE ACA CREANDO UN GENERADOR - TestPersona.java *******************/
+/*********** PASO 3 DESDE ACA CREANDO UN GENERADOR - demo.TestPersona.java *******************/
 
 package tudai.tdv.test.testng;
 
@@ -94,24 +94,24 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import tudai.tdv.java.Persona;
+import tudai.tdv.java.demo.Persona;
 
-public class TestPersona {
+public class demo.TestPersona {
 	 @DataProvider
-	  public Persona[] GeneradorPersona() {
+	  public demo.Persona[] GeneradorPersona() {
 		  System.out.println("Genero casos");
-	    return new Persona[] {
-			 new Persona("Juan","26.150.235","1979-01-01",42,true),
-			 new Persona("Pedro","27.280.234","1980-02-01",41,true),
-			 new Persona("Maria","28.184.259","1981-03-01",47,true),
-			 new Persona("Cecilia","32.234.528","1983-04-01",38,true),
-			 new Persona("Carlos","33.124.235","1985-04-01",36,true),
-			 new Persona("Jose","35.345.534","1987-04-01",34,true)
+	    return new demo.Persona[] {
+			 new demo.Persona("Juan","26.150.235","1979-01-01",42,true),
+			 new demo.Persona("Pedro","27.280.234","1980-02-01",41,true),
+			 new demo.Persona("Maria","28.184.259","1981-03-01",47,true),
+			 new demo.Persona("Cecilia","32.234.528","1983-04-01",38,true),
+			 new demo.Persona("Carlos","33.124.235","1985-04-01",36,true),
+			 new demo.Persona("Jose","35.345.534","1987-04-01",34,true)
 
 	    };
 	  }
 		@Test(dataProvider = "GeneradorPersona")
-		public void testEdadBienCalculada(Persona p) {
+		public void testEdadBienCalculada(demo.Persona p) {
 
 			int edadReportada = p.getEdad();
 			int edadReal= getEdad(p.getFechaNacimiento());
@@ -176,7 +176,7 @@ public class TestPersona {
     <parameter name="tester-name" value="Quique" />
     <test name="Pruebo como llamar un test desde un archivo plano">
         <classes>
-            <class name="tudai.tdv.test.testng.DemoPrecedencia">
+            <class name="tudai.tdv.test.testng.demo.DemoPrecedencia">
                 <methods>
                     <include name="test1" />
                 </methods>
@@ -212,13 +212,13 @@ public class TestPersona {
 
 /********************************************/
 
-/***** TEST con parametros: En test Persona agregamos ****/
+/***** TEST con parametros: En test demo.Persona agregamos ****/
 
 @Test
 		@Parameters({"nombre","dni","fnac"})
 		public void testConParametros(@Optional("Pepe") String nombre ,@Optional("20.345.678") String dni, @Optional("2001-2-3")String fNac)
 		{
-		Persona p = new Persona(nombre, dni, fNac, 0, false);
+		demo.Persona p = new demo.Persona(nombre, dni, fNac, 0, false);
 		System.out.println(p);
 		}
 
@@ -232,7 +232,7 @@ public class TestPersona {
     <parameter name="tester-name" value="Quique" />
     <test name="Pruebo como llamar un test desde un archivo plano">
         <classes>
-            <class name="tudai.tdv.test.testng.TestPersona">
+            <class name="tudai.tdv.test.testng.demo.TestPersona">
                 <methods>
                 <parameter name="nombre" value="Luis"/>
 				<parameter name="dni" value="12.345.6783"/>

@@ -1,3 +1,5 @@
+package demo;
+
 import org.testng.annotations.*;
 
 public class DemoPrecedencia {
